@@ -4,6 +4,7 @@ gem 'rails', '3.2.1'
 gem 'haml-rails'
 gem 'devise'
 gem 'cancan'
+gem 'simple_form'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -16,6 +17,7 @@ gem 'sqlite3'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
+  gem "twitter-bootstrap-rails"
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer'
@@ -27,12 +29,16 @@ gem 'jquery-rails'
 
 group :development do
   gem "debugger"
+  gem "quiet_assets"
 end
 
-group :test do
+group :development, :test do
+  gem 'steak'
   gem 'simplecov', :require => false
-  gem "rspec-rails"
   gem 'fabrication'
+  gem 'faker'
+  gem "email_spec"
+  gem "database_cleaner"
 end
 
 # To use ActiveModel has_secure_password

@@ -19,7 +19,9 @@ module MusicCollection
   class Application < Rails::Application
     config.generators do |g|
       g.template_engine :haml
-      g.test_framework :rspec, :fixture => true
+      g.test_framework :rspec, :fixture => false
+      g.view_specs false
+      g.helper_specs false
       g.fixture_replacement :fabricator
     end
     # Settings in config/environments/* take precedence over those specified here.
