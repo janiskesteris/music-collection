@@ -8,20 +8,15 @@ gem 'simple_form'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'meta_search'
-gem 'fog'
-gem 'activerecord-postgresql-adapter'
 
-
-gem 'sqlite3'
+gem 'jquery-rails'
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails', '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'twitter-bootstrap-rails'
   gem 'uglifier', '>= 1.0.3'
 end
-
-gem 'jquery-rails'
 
 group :development do
   gem "debugger"
@@ -29,10 +24,16 @@ group :development do
 end
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'steak'
   gem 'simplecov', :require => false
   gem 'fabrication'
   gem 'faker'
   gem "email_spec"
   gem "database_cleaner"
+end
+
+group :production do
+  gem 'activerecord-postgresql-adapter'
+  gem 'fog'
 end
