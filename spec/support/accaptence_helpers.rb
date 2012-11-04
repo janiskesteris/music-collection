@@ -1,8 +1,8 @@
-module HelperMethods
+module AcceptanceHelpers
   # Put helper methods you need to be available in all acceptance specs here.
 
   def real_sign_in email, password
-    visit homepage
+    visit root_path
     click_link 'Sign in'
     fill_in "Email", with: email
     fill_in "Password", with: password
@@ -24,4 +24,4 @@ module HelperMethods
 
 end
 
-RSpec.configuration.include HelperMethods, :type => :acceptance
+RSpec.configuration.include AcceptanceHelpers, :type => :acceptance

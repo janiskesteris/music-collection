@@ -13,7 +13,7 @@ feature 'Albums', %q{
   scenario 'visit and see my album list' do
     Fabricate(:album, user: @user, name: "My own album 1")
     Fabricate(:album, user: @user, name: "My own album 2")
-    visit homepage
+    visit root_path
     click_link "My albums"
     within "table" do
       page.should have_content("My own album 1")
@@ -23,7 +23,7 @@ feature 'Albums', %q{
 
   scenario 'create new album' do
     Fabricate :genre, name: "Rock"
-    visit user_albums(@user)
+    visit user_albums_path(@user)
     click_link "New"
     page.should have_css("#new_album")
     fill_in "Name", with: Faker::Lorem.word
@@ -37,9 +37,15 @@ feature 'Albums', %q{
     page.should have_css(".alert-success", text: "Album was successfully created.")
   end
 
-  scenario 'edit existing album' do
+  scenario 'see validations when creation fails' do
+    visit new_user_album_path(@user)
+    click_button "Create Album"
+    page.should have_content("can't be blank")
+  end
+
+  scenario 'update existing album' do
     Fabricate(:album, user: @user, name: "My own album")
-    visit user_albums(@user)
+    visit user_albums_path(@user)
     within(:xpath, "//*[text()='My own album']/../..") do
       click_link "Edit"
     end
@@ -48,9 +54,17 @@ feature 'Albums', %q{
     page.should have_css(".alert-success", text: "Album was successfully updated.")
   end
 
+  scenario 'see validations when update fails' do
+    album = Fabricate(:album, user: @user, name: "My own album")
+    visit edit_user_album_path(@user, album)
+    fill_in "Name", with: ""
+    click_button "Update Album"
+    page.should have_content("can't be blank")
+  end
+
   scenario 'save image' do
     album = Fabricate(:album, user: @user, name: "My own album")
-    visit edit_album_path(album)
+    visit edit_user_album_path(album.user, album)
     attach_file('Cover image', "#{Rails.root}/spec/fixtures/test.jpg")
     click_button "Update Album"
     page.should have_selector("img[src$='test.jpg']")
@@ -64,13 +78,13 @@ feature 'Albums', %q{
     end
   end
 
-  scenario 'delete album' do
+  scenario 'delete album', js: true do
     album = Fabricate(:album, user: @user, name: "My own album")
     visit album_path(album)
     click_link "Destroy"
     page.driver.browser.switch_to.alert.accept
     page.should have_css(".alert-success", text: "Album was successfully deleted!")
-    visit user_albums(@user)
+    visit user_albums_path(@user)
     page.should_not have_content("My own album")
   end
 

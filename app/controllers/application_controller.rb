@@ -2,13 +2,17 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to (user_signed_in? ? root_path : new_user_session_path), :alert => exception.message, status: 403
+    render_401
   end
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
 
   private
 
   def record_not_found
-    redirect_to root_path, :status => 404
+    render :file => "#{Rails.root}/public/404.html", :status => 404
+  end
+
+  def render_401
+    render :file => "#{Rails.root}/public/401.html", :status => 401
   end
 end

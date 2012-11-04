@@ -7,20 +7,20 @@ feature 'Home', %q{
 } do
 
   scenario 'view latest album list' do
-    visit homepage
+    visit root_path
     page.should_not have_content("Latest albums")
     Fabricate :album, name: "Newer album"
     Fabricate :album, name: "Older album", created_at: 1.day.ago
-    visit homepage
+    visit root_path
     find(".thumbnails li:first").should have_content("Newer album")
     find(".thumbnails li:last").should have_content("Older album")
   end
 
   scenario 'only visitors see big sign up button' do
-    visit homepage
+    visit root_path
     page.should have_content("Sign up and start collecting")
     create_and_sign_in_user
-    visit homepage
+    visit root_path
     page.should_not have_content("Sign up and start collecting")
   end
 

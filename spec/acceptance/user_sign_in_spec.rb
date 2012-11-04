@@ -17,10 +17,4 @@ feature 'User sign in', %q{
     page.should have_css('.alert-error', :text => "Invalid email or password.")
   end
 
-  scenario 'redirect to sign in form when access restricted for visitor' do
-    visit edit_album_path(Fabricate :album)
-    page.should have_css('.alert-error', :text => "You are not authorized to access this page.")
-    find("h2").should have_content "Sign in"
-  end
-
 end

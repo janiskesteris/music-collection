@@ -24,17 +24,15 @@ class AlbumsController < ApplicationController
     if @album.save
       redirect_to @album, notice: 'Album was successfully created.'
     else
-      render action: "new"
+      render :new
     end
   end
 
   def update
-    @album = @user.albums.find(params[:id])
-
     if @album.update_attributes(params[:album])
       redirect_to @album, notice: 'Album was successfully updated.'
     else
-      render action: "edit"
+      render :edit
     end
   end
 

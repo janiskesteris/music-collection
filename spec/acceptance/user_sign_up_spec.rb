@@ -8,7 +8,7 @@ feature 'User sign up', %q{
 
   scenario 'sign up successfully' do
     email = Faker::Internet.email
-    visit homepage
+    visit root_path
     click_link('Sign up')
     page.should have_css('.new_user')
 

@@ -13,7 +13,7 @@ feature 'Album search', %q{
   scenario 'search in name' do
     Fabricate :album, user: @user, name: "First album"
     Fabricate :album, user: @user, name: "Second album"
-    visit homepage
+    visit root_path
     search_album_with("album")
     within "#album-list" do
       page.should have_content("First album")
@@ -23,7 +23,7 @@ feature 'Album search', %q{
 
   scenario 'search in description' do
     Fabricate :album, user: @user, name: "Searchable album", description: "unique description"
-    visit homepage
+    visit root_path
     search_album_with("unique description")
     within "#album-list" do
       page.should have_content("Searchable album")
@@ -32,7 +32,7 @@ feature 'Album search', %q{
 
   scenario 'search in artist' do
     Fabricate :album, user: @user, name: "Searchable album", artist: "Jon Bovi"
-    visit homepage
+    visit root_path
     search_album_with("Jon Bovi")
     within "#album-list" do
       page.should have_content("Searchable album")
@@ -42,7 +42,7 @@ feature 'Album search', %q{
   scenario 'search only within owned albums' do
     Fabricate :album, user: @user, name: "My album"
     Fabricate :album, name: "Your album"
-    visit homepage
+    visit root_path
     search_album_with("album")
     within "#album-list" do
       page.should have_content("My album")
