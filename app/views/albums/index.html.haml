@@ -1,0 +1,23 @@
+- model_class = Album
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize
+%table.table.table-striped#album-list
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:artist)
+      %th= model_class.human_attribute_name(:released_on)
+      %th= model_class.human_attribute_name(:genre_id)
+      %th=t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @albums.each do |album|
+      %tr
+        %td= link_to album.name, album_path(album)
+        %td= album.artist
+        %td= album.released_on
+        %td= album.genre_name
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_user_album_path(@user, album), :class => 'btn btn-mini'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), user_album_path(@user, album), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
+
+= link_to t('.new', :default => t("helpers.links.new")), new_user_album_path(@user), :class => 'btn btn-primary'

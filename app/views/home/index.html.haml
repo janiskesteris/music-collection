@@ -1,0 +1,16 @@
+
+- unless user_signed_in?
+  .span4.offset2
+    .well
+      = link_to "Sign up and start collecting", new_user_registration_path, class: "btn btn-large btn-block btn-primary"
+  .clearfix
+
+- if @latest_albums.present?
+  %h1 Newest albums in collection
+  %ul.thumbnails#small-album-list
+    - @latest_albums.each do |album|
+      %li.span3
+        .thumbnail
+          = link_to image_tag(album.cover_image.list), album_path(album)
+          %h4= link_to album.name, album_path(album)
+          %p= truncate(album.description, :length => 100)
